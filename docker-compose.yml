@@ -1,26 +1,31 @@
 version: "3"
 services:
-  php-api:
-    image: my-php-api
+  my-php-api:
+    build: .
     container_name: my-php-api
-    build:
-      context: .
     ports:
       - "8000:80"
+    environment:
+      - DB_HOST=my-postgres
+      - DB_PORT=5432
+      - DB_USER=nyfong
+      - DB_PASSWORD=78fd825caa6b56dbfa9c2316369580cb23b8e0b21421749266e3d4165c5c4b90
+      - DB_NAME=php_test
     depends_on:
-      - postgres
+      - my-postgres
     networks:
-      - my-network
+      - app-network
 
-  postgres:
-    image: postgres
+  my-postgres:
+    image: postgres:latest
     container_name: my-postgres
     environment:
+      POSTGRES_USER: nyfong
       POSTGRES_PASSWORD: 7cc01d92c8dce52eaf441dbae694cb34858e55ebeac43afbf100cb71de287b6c
       POSTGRES_DB: php_test
     networks:
-      - my-network
+      - app-network
 
 networks:
-  my-network:
+  app-network:
     driver: bridge
