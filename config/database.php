@@ -3,7 +3,7 @@ class Database {
     private $host = "host.docker.internal"; // service name in docker-compose
     private $db_name = "php_test";
     private $username = "postgres";
-    private $password = "password";
+    private $password = "fongfong";
     private $port = "5432";
     public $conn;
 
