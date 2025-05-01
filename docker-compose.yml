@@ -16,7 +16,7 @@ services:
     image: postgres
     container_name: my-postgres
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: 7cc01d92c8dce52eaf441dbae694cb34858e55ebeac43afbf100cb71de287b6c
       POSTGRES_DB: php_test
     networks:
       - my-network
