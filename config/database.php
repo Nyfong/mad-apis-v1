@@ -1,6 +1,6 @@
 <?php
 class Database {
-    private $host = "db"; // service name in docker-compose
+    private $host = "host.docker.internal"; // service name in docker-compose
     private $db_name = "php_test";
     private $username = "postgres";
     private $password = "password";
