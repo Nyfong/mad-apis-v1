@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private $host = "host.docker.internal"; // service name in docker-compose
+    private $host = "my-postgres"; // service name in docker-compose
     private $db_name = "php_test";
     private $username = "postgres";
-    private $password = "fongfong";
+    private $password = "78fd825caa6b56dbfa9c2316369580cb23b8e0b21421749266e3d4165c5c4b90";
     private $port = "5432";
     public $conn;
 
