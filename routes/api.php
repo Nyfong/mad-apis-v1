@@ -11,16 +11,36 @@ file_put_contents('debug.log', "URI Segments: " . print_r($uri, true) . "\n", FI
 
 // Handle /simple-api/api/products
 $api_index = array_search('api', $uri);
-if ($api_index === false || !isset($uri[$api_index + 1]) || $uri[$api_index + 1] !== 'products') {
-    header("HTTP/1.1 404 Not Found");
-    header('Content-Type: application/json');
-    echo json_encode([
-        "message" => "Endpoint not found",
-        "uri" => $uri,
-        "request_uri" => $_SERVER['REQUEST_URI']
-    ]);
-    exit();
+// Wishlist handling
+if ($api_index !== false && isset($uri[$api_index + 1]) && $uri[$api_index + 1] === 'wishlist') {
+    require_once 'controllers/WishlistController.php';
+    $database = new Database();
+    $wishlistController = new WishlistController($database->getConnection());
+
+    switch ($request_method) {
+        case 'GET':
+            $user_id = isset($_GET['user_id']) ? (int)$_GET['user_id'] : null;
+            if ($user_id) {
+                $wishlistController->index($user_id);
+            } else {
+                http_response_code(400);
+                echo json_encode(["message" => "User ID required"]);
+            }
+            break;
+        case 'POST':
+            $wishlistController->add();
+            break;
+        case 'DELETE':
+            $wishlistController->remove();
+            break;
+        default:
+            http_response_code(405);
+            echo json_encode(["message" => "Method not allowed"]);
+    }
+
+    exit(); // Stop further execution
 }
+
 
 $id = null;
 if (isset($uri[$api_index + 2])) {
