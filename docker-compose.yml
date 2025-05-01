@@ -1,0 +1,26 @@
+version: "3"
+services:
+  php-api:
+    image: my-php-api
+    container_name: my-php-api
+    build:
+      context: .
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+    networks:
+      - my-network
+
+  postgres:
+    image: postgres
+    container_name: my-postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: php_test
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
